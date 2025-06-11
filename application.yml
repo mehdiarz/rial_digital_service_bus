@@ -1,0 +1,9 @@
+encryption:
+  key: "1234567890samplekey1234567890123"
+  iv: "1234567890123456"
+
+app:
+  baseUrl: "https://sibank.esinabank.ir:443/hostRest/xti22"
+  adminToken: "123456"
+  adminUser: "xti22adm"
+  branch: "BR"
