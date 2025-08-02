@@ -1,5 +1,6 @@
 package ir.sinatech.rial_digital_service_bus.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -32,13 +33,13 @@ public class UserInfoResponse {
 
     @Data
     public static class Identity {
-        @JsonProperty("id_national")
+        @JsonProperty("national_id")
         private String idNational;
 
-        @JsonProperty("id_serial_national")
+        @JsonProperty("national_serial_id")
         private String idSerialNational;
 
-        @JsonProperty("name_first")
+        @JsonProperty("first_name")
         private String nameFirst;
 
         @JsonProperty("first_name_en")
@@ -47,7 +48,7 @@ public class UserInfoResponse {
         @JsonProperty("last_name")
         private String lastName;
 
-        @JsonProperty("en_name_last")
+        @JsonProperty("last_name_en")
         private String enNameLast;
 
         @JsonProperty("father_name")
@@ -65,16 +66,17 @@ public class UserInfoResponse {
         @JsonProperty("gender")
         private int gender;
 
-        @JsonProperty("number_shenasname")
+        @JsonProperty("shenasname_number")
         private int numberShenasname;
 
         @JsonProperty("shenasname_seri")
         private String shenasnameSeri;
 
-        @JsonProperty("serial_shenasname")
+        @JsonProperty("shenasname_serial")
         private int serialShenasname;
 
-        public boolean isEmpty() {
+        @JsonIgnore
+        public boolean isIdentityEmpty() {
             return nameFirst == null &&
                     lastName == null &&
                     idNational == null;

@@ -1,5 +1,6 @@
 package ir.sinatech.rial_digital_service_bus.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ir.sinatech.rial_digital_service_bus.model.*;
 import ir.sinatech.rial_digital_service_bus.service.GetTokenService;
 import ir.sinatech.rial_digital_service_bus.service.UserInfoService;
@@ -19,7 +20,7 @@ public class UserInfoController {
 
     @ApiVersion({"v1", "v2"})
     @PostMapping("/api/getUserInfo/")
-    public String getUserInfo(@RequestBody UserInfoRequestModel req) {
+    public String getUserInfo(@RequestBody UserInfoRequestModel req) throws Exception {
         return userInfoService.getUserInfo(req);
     }
 
@@ -32,13 +33,13 @@ public class UserInfoController {
         if (userInfo.isEmpty()) {
             return "<h1>خطا در دریافت اطلاعات</h1>";
         }
-        if(userInfo.get().getUser().isBankCustomer() && (userInfo.get().getIdentity() != null && !userInfo.get().getIdentity().isEmpty())) {
+        if(userInfo.get().getUser().isBankCustomer() && (userInfo.get().getIdentity() != null && !userInfo.get().getIdentity().isIdentityEmpty())) {
             return "<h1>خوش آمدید (مشتری بانک)</h1>";
         }
-        if(!userInfo.get().getUser().isBankCustomer() && (userInfo.get().getIdentity() != null && !userInfo.get().getIdentity().isEmpty())) {
+        if(!userInfo.get().getUser().isBankCustomer() && (userInfo.get().getIdentity() != null && !userInfo.get().getIdentity().isIdentityEmpty())) {
             return "<h1>خوش آمدید (کاربر احراز شده ولی مشتری بانک نیست)</h1>";
         }
-        if(!userInfo.get().getUser().isBankCustomer() && (userInfo.get().getIdentity() == null || userInfo.get().getIdentity().isEmpty())) {
+        if(!userInfo.get().getUser().isBankCustomer() && (userInfo.get().getIdentity() == null || userInfo.get().getIdentity().isIdentityEmpty())) {
             return "<h1>خوش آمدید (کاربر احراز نشده و مشتری بانک نیست)</h1>";
         }
         return "<h1>خطا در ورود</h1>";

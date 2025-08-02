@@ -1,5 +1,7 @@
 package ir.sinatech.rial_digital_service_bus;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ir.sinatech.rial_digital_service_bus.model.ProcessModel;
 import ir.sinatech.rial_digital_service_bus.service.ProcessService;
 import ir.sinatech.rial_digital_service_bus.utils.AppConfig;
@@ -7,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 class RialDigitalServiceBusApplicationTests {
@@ -22,17 +22,30 @@ class RialDigitalServiceBusApplicationTests {
     private AppConfig appConfig;
 
     @Test
-    void contextLoads() {
+    void contextLoads() throws JsonProcessingException {
         System.out.println(appConfig.getBaseUrl());
-        List<ProcessModel> processes = processService.getProcesses("Sina_SpecificProcesses");
+        List<ProcessModel> processes = processService.getProcesses("Process_MPSina_RialDigital");
 
-        System.out.println(processes);
+        System.out.println("mp: " + processes);
 
         processes.sort(Comparator.comparing(p -> p.version));
         ProcessModel latest = processes.get(processes.size() - 1);
+
+        Map<String, Object> input = new HashMap<>();
+
+        input.putIfAbsent("userId", "9910433274");
+        input.putIfAbsent("token", "jhDjAnEpyQ3ZLVwNqeKXQw==");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonInput = "";
+        jsonInput = objectMapper.writeValueAsString(input);
+
+
         List<String> empty = new ArrayList<String>();
 
-        System.out.println("startprocesswithreturn: " + processService.startProcessWithReturn("Sina_SpecificProcesses" , empty, null, true));
+        System.out.println("MPSina_RialDigital: " + processService.startProcessWithReturn("Process_MPSina_RialDigital" , empty, jsonInput, true));
+
+//        System.out.println("startprocesswithreturn: " + processService.startProcessWithReturn("Sina_SpecificProcesses" , empty, null, true));
 
 
 
