@@ -24,8 +24,6 @@ public class AESCipherUtil {
     public AESCipherUtil(EncryptionConfiguration config) {
         key = config.getKey();
         iv = config.getIv();
-        System.out.println(key);
-        System.out.println(iv);
     }
 
     public static String encrypt(String plainText) throws Exception {
